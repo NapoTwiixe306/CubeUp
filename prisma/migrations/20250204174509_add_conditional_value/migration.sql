@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `User` MODIFY `elo` VARCHAR(191) NULL;
