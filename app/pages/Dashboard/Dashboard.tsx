@@ -1,23 +1,15 @@
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import Sidebar from "@/src/components/Sidebar";
-
+import Overview from "@/app/pages/Dashboard/Components/Overview";
+import Link from "next/link";
+import Scramble from "@/app/pages/Dashboard/Components/Scramble";
 export default function Dash() {
-  const { data: session, status } = useSession();
   const [activePage, setActivePage] = useState<string>("Vue d'ensemble");
-
-  if (status === "loading") {
-    return <p>Chargement...</p>;
-  }
-
-  if (!session) {
-    return <p>Utilisateur non connecté</p>;
-  }
-
   return (
     <div className="w-full h-screen bg-stone-100 dark:bg-black text-black flex">
       <Sidebar setActivePage={setActivePage} />
-      <div className="flex-1 p-6 dark:bg-gray-800 text-black dark:text-white"> 
+      <div className="flex-1 p-6 dark:bg-gray-800 text-black dark:text-white">
         <main className="w-full">{renderContent(activePage)}</main>
       </div>
     </div>
@@ -27,9 +19,9 @@ export default function Dash() {
 const renderContent = (activePage: string) => {
   switch (activePage) {
     case "Vue d'ensemble":
-      return <div>Vue d'ensemble Panel</div>;
+      return <Overview/>;
     case "Chronomètres":
-      return <div>Chronomètres Panel</div>;
+      return <Scramble/>;
     case "Classement":
       return <div>Classement Panel</div>;
     case "Tournois":

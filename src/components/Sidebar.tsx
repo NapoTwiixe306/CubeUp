@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Home,
-  Settings,
   LayoutDashboard,
   LucideChevronsUpDown,
   Clock,
@@ -54,27 +53,22 @@ const Sidebar = ({ setActivePage }: { setActivePage: (page: string) => void }) =
           </div>
           <nav>
             <SidebarItem icon={<Home size={24} />} text="Accueil" onClick={() => (window.location.href = "/")} expanded={isExpanded} />
-            {role === "Admin" || role === "Free" && (
-              <>
-                <SidebarItem icon={<LayoutDashboard size={24} />} text="Vue d'ensemble" onClick={() => handleSetActivePage("Vue d'ensemble")} expanded={isExpanded} />
-                <SidebarItem icon={<Clock size={24} />} text="Chronomètres" onClick={() => handleSetActivePage("Chronomètres")} expanded={isExpanded} />
-                <SidebarItem icon={<ChartNoAxesColumn size={24} />} text="Classement" onClick={() => handleSetActivePage("Classement")} expanded={isExpanded} />
-                <SidebarItem icon={<Network size={24} />} text="Tournois" onClick={() => handleSetActivePage("Tournois")} expanded={isExpanded} />
-              </>
-            )}
-
+            <SidebarItem icon={<LayoutDashboard size={24} />} text="Vue d'ensemble" onClick={() => handleSetActivePage("Vue d'ensemble")} expanded={isExpanded} />
+            <SidebarItem icon={<Clock size={24} />} text="Chronomètres" onClick={() => handleSetActivePage("Chronomètres")} expanded={isExpanded} />
+            {/*<SidebarItem icon={<ChartNoAxesColumn size={24} />} text="Classement" onClick={() => handleSetActivePage("Classement")} expanded={isExpanded} />
+            <SidebarItem icon={<Network size={24} />} text="Tournois" onClick={() => handleSetActivePage("Tournois")} expanded={isExpanded} />*/}
           </nav>
         </div>
 
-        {/* Bouton et menu utilisateur */}
         <div className="relative">
           <button
             className="flex w-full items-center justify-between rounded-md p-2 hover:bg-gray-200 dark:hover:bg-gray-700"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <p className={`ml-2 ${isExpanded ? "block" : "hidden"}`}>
-              {session?.user.email}
+              {session?.user?.email ?? "Anonyme"}
             </p>
+
             <LucideChevronsUpDown />
           </button>
 
@@ -93,12 +87,14 @@ const Sidebar = ({ setActivePage }: { setActivePage: (page: string) => void }) =
                 >
                   Profil
                 </button>
-                <button
-                    className="w-full text-left p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md"
-                    onClick={() => signOut()}
-                >
-                  Déconnexion
-                </button>
+                {session && (
+                    <button
+                      className="w-full text-left p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md"
+                      onClick={() => signOut()}
+                    >
+                      Déconnexion
+                    </button>
+                  )}
                 <button
                     onClick={toggleDarkMode}
                     className="w-full text-left p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-md"
